@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Lib;
+namespace App\Lib;
 
 interface IApi
 {
