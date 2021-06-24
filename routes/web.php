@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\tstDB;
-
+use App\Searches\CityCriteriaSearch;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,13 @@ Route::get('/zbi', function (Request $name) {
     tstDB::create(['id' => 1, 'title' => 'zbi kbir']);
     dd($name);
 });
+
+
+// Route::get('/tstHotels', function (Request $req) {
+//     error_log("inside");
+//     $tst = new CityCriteriaSearch();
+//     $tst->setDestinationAirportCode("ZBI");
+//     $tst->setHotelMinPrice(11);
+//     $tst->setHotelMaxPrice(55);
+//     dd($tst->search());
+// });
