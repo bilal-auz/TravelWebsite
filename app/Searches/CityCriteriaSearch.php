@@ -46,7 +46,6 @@ class CityCriteriaSearch implements ISearch
         // $this->placeToDiscover->getPlacesByLabel($this->cityName, $this->placeKeyWord);
         // $this->weatherApi->getWeather($this->cityName);
         // $this->imagesApi->getImage($this->cityName);
-        return  $this->hotelsApi->getHotelsWithPrices($this->destinationAirportCode, $this->hotelMinPrice, $this->hotelMaxPrice);
     }
 
     public function setCityName($cityName)
