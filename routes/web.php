@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\tstDB;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/zbi', function (Request $name) {
+    error_log("zbi");
+    tstDB::create(['id' => 1, 'title' => 'zbi kbir']);
+    dd($name);
 });
