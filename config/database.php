@@ -92,11 +92,11 @@ return [
         ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', 27017),
-            'database' => env('DB_DATABASE', 'homestead'),
-            'username' => env('DB_USERNAME', ''),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST_2', '127.0.0.1'),
+            'port' => env('DB_PORT_2', 27017),
+            'database' => env('DB_DATABASE_2', 'homestead'),
+            'username' => env('DB_USERNAME_2', ''),
+            'password' => env('DB_PASSWORD_2', ''),
             'options' => [
                 'database' => env('DB_AUTHENTICATION_DATABASE', 'admin')
             ]

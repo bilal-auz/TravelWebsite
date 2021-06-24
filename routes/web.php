@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\tstDB;
+use App\Models\tstDbSql;
 use App\Searches\CityCriteriaSearch;
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/zbi', function (Request $name) {
+Route::get('/nosql', function (Request $req) {
     error_log("zbi");
     tstDB::create(['id' => 1, 'title' => 'zbi kbir']);
-    dd($name);
+    dd($req);
+});
+
+Route::get('/sql', function (Request $req) {
+    tstDbSql::create([]);
 });
 
 
