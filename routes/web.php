@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Models\tstDB;
 use App\Models\tstDbSql;
 use App\Searches\CityCriteriaSearch;
+use Carbon\Carbon;
+
+//testing
+use App\APIs\FlightApi;
+use App\APIs\CurrencyApi;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +36,22 @@ Route::get('/sql', function (Request $req) {
     tstDbSql::create([]);
 });
 
+Route::get('/date', function (Request $req) {
+    return (Carbon::now()->format('Y-m-d'));
+});
+
+
+Route::get('/flights', function (Request $req) {
+    $flight = FlightApi::getInstance();
+
+    $flight->getFlights("LAX");
+});
+
+Route::get('/currency', function (Request $req) {
+    $currency = CurrencyApi::getInstance();
+
+    $currency->convert("AFN");
+});
 
 // Route::get('/tstHotels', function (Request $req) {
 //     error_log("inside");
