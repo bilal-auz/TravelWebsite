@@ -29,11 +29,11 @@ class RestaurantsApi implements IApi
     function getRestaurants(String $cityName)
     {
         $res = Http::withOptions(['verify' => false])
-            ->asForm()
-            ->withHeader([
+            ->withHeaders([
                 "x-rapidapi-key" => $this::x_rapidapi_key,
                 "x-rapidapi-host" => $this::x_rapidapi_host
             ])
+            ->asForm()
             ->post($this::restaurantsEndpoint, [
                 'location_id' => $this->getLocationId($cityName),
                 'language' => $this::language,
@@ -46,9 +46,12 @@ class RestaurantsApi implements IApi
 
     function getRestaurantsWithPrices(String $cityName, int $minPrice, int $maxPrice)
     {
-        $hotels = $this->getRestaurants($cityName);
+        #--  this method will only filter the the normal response  --# 
 
-        dd($hotels->getBody()->getContents());
+        // $restaurants = $this->getRestaurants($cityName);
+        $restaurants = json_decode(file_get_contents(public_path() . '\ApiResponses\Restaturants_response.json'), true);
+        // dd($restaurants->getBody()->getContents());
+        dd($restaurants['results']['data']);
         //filtering by the price
 
         #return filterd_hotels
@@ -56,9 +59,9 @@ class RestaurantsApi implements IApi
 
     function getLocationId(String $cityName)
     {
-        $loction_id = Http::withOptions(['verify' => false])
+        $res = Http::withOptions(['verify' => false])
             ->asForm()
-            ->withHeader([
+            ->withHeaders([
                 "x-rapidapi-key" => $this::x_rapidapi_key,
                 "x-rapidapi-host" => $this::x_rapidapi_host
             ])
@@ -67,6 +70,7 @@ class RestaurantsApi implements IApi
                 "language" => $this::language
             ]);
 
-        dd($loction_id->getBody()->getContents()->results->data[0]->result_object->location_id);
+        $res = json_decode($res->getBody()->getContents());
+        return $res->results->data[0]->result_object->location_id; //->results->data[0]->result_object->location_id
     }
 }

@@ -22,8 +22,10 @@ class CityNameSearch implements ISearch
     private $weatherApi;
     private $imagesApi;
 
-    function __construct()
+    function __construct(String $cityName, $cityAirportCode)
     {
+        $this->cityName = $cityName;
+        $this->cityAirportCode = $cityAirportCode;
         $this->hotelsApi = HotelsApi::getInstance();
         $this->flightsApi = FlightApi::getInstance();
         $this->restaurantsApi = RestaurantsApi::getInstance();
@@ -31,13 +33,19 @@ class CityNameSearch implements ISearch
         $this->weatherApi = WeatherApi::getInstance();
         $this->imagesApi = ImagesApi::getInstance();
     }
+
     function search()
     {
-        $this->hotelsApi->getHotels($this->destinationAirportCode);
-        $this->flightsApi->getFlights($this->destinationAirportCode);
+        return "From Search by name, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->cityAirportCode";
+        $this->hotelsApi->getHotels($this->cityAirportCode);
+        $this->flightsApi->getFlights($this->cityAirportCode);
         $this->restaurantsApi->getRestaurants($this->cityName);
         $this->placeToDiscover->getRandPlace($this->cityName);
         $this->weatherApi->getWeather($this->cityName);
         $this->imagesApi->getImage($this->cityName);
+    }
+
+    function getAttributes()
+    {
     }
 }

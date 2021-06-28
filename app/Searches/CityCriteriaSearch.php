@@ -29,8 +29,17 @@ class CityCriteriaSearch implements ISearch
     private $weatherApi;
     private $imagesApi;
 
-    function __construct()
+    function __construct(String $cityName, String $destinationAirportCode, String $hotelMinPrice, String $hotelMaxPrice, String $restaurantMinPrice, String $restaurantMixPrice, String $placeKeyWord, String $flightMinPrice, String $flightMaxPrice)
     {
+        $this->$cityName = $cityName;
+        $this->$destinationAirportCode = $destinationAirportCode;
+        $this->$hotelMinPrice = $hotelMinPrice;
+        $this->$hotelMaxPrice = $hotelMaxPrice;
+        $this->$restaurantMinPrice = $restaurantMinPrice;
+        $this->$restaurantMixPrice = $restaurantMixPrice;
+        $this->$placeKeyWord = $placeKeyWord;
+        $this->$flightMinPrice = $flightMinPrice;
+        $this->$flightMaxPrice = $flightMaxPrice;
         $this->hotelsApi = HotelsApi::getInstance();
         $this->flightsApi = FlightApi::getInstance();
         $this->restaurantsApi = RestaurantsApi::getInstance();
@@ -38,58 +47,19 @@ class CityCriteriaSearch implements ISearch
         $this->weatherApi = WeatherApi::getInstance();
         $this->imagesApi = ImagesApi::getInstance();
     }
+
     function search()
     {
-        // $this->hotelsApi->getHotelsWithPrices($this->destinationAirportCode, $this->hotelMinPrice, $this->hotelMaxPrice);
-        // $this->flightsApi->getFlightsWithPrices($this->destinationAirportCode, $this->flightMinPrice, $this->flightMaxPrice);
-        // $this->restaurantsApi->getRestaurantsByPrices($this->cityName, $this->restaurantMinPrice, $this->restaurantMixPrice);
-        // $this->placeToDiscover->getPlacesByLabel($this->cityName, $this->placeKeyWord);
-        // $this->weatherApi->getWeather($this->cityName);
-        // $this->imagesApi->getImage($this->cityName);
+        return "From Search by criteria, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->cityAirportCode";
+        $this->hotelsApi->getHotelsWithPrices($this->destinationAirportCode, $this->hotelMinPrice, $this->hotelMaxPrice);
+        $this->flightsApi->getFlightsWithPrices($this->destinationAirportCode, $this->flightMinPrice, $this->flightMaxPrice);
+        $this->restaurantsApi->getRestaurantsByPrices($this->cityName, $this->restaurantMinPrice, $this->restaurantMixPrice);
+        $this->placeToDiscover->getPlacesByLabel($this->cityName, $this->placeKeyWord);
+        $this->weatherApi->getWeather($this->cityName);
+        $this->imagesApi->getImage($this->cityName);
     }
 
-    public function setCityName($cityName)
+    function getAttributes()
     {
-        $this->cityName = $cityName;
-    }
-
-    public function setDestinationAirportCode($destinationAirportCode)
-    {
-        $this->destinationAirportCode = $destinationAirportCode;
-    }
-
-    public function setHotelMinPrice($hotelMinPrice)
-    {
-        $this->hotelMinPrice = $hotelMinPrice;
-    }
-
-    public function setHotelMaxPrice($hotelMaxPrice)
-    {
-        $this->hotelMaxPrice = $hotelMaxPrice;
-    }
-
-    public function setRestaurantMinPrice($restaurantMinPrice)
-    {
-        $this->restaurantMinPrice = $restaurantMinPrice;
-    }
-
-    public function setRestaurantMixPrice($restaurantMixPrice)
-    {
-        $this->restaurantMixPrice = $restaurantMixPrice;
-    }
-
-    public function setPlaceKeyWord($placeKeyWord)
-    {
-        $this->placeKeyWord = $placeKeyWord;
-    }
-
-    public function setFlightMinPrice($flightMinPrice)
-    {
-        $this->flightMinPrice = $flightMinPrice;
-    }
-
-    public function setFlightMaxPrice($flightMaxPrice)
-    {
-        $this->flightMaxPrice = $flightMaxPrice;
     }
 }

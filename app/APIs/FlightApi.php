@@ -62,13 +62,21 @@ class FlightApi implements IApi
                 'adults' => '1',
                 'currencyCode' => $this::currency,
                 'maxPrice' => $maxPrice,
-                'max' => 2 //flights returns
+                // 'max' => 10 //flights returns
                 #should do min price manually
             ]);
-        dd(json_decode($res->getBody()->getContenets()));
-        // ->data[0]->hotel->name 
-        //data[0]->hotel->offers[0]->price->currencyCode, for convert to MAD with API. 
-        //data[0]->hotel->offers[0]->price->base, means average
+
+        $res = json_decode($res->getBody()->getContents());
+
+        $filtered = [];
+        //manually filtering the by minPrice
+        foreach ($res->data as $filght) {
+            if ($filght->price->total >= $minPrice) {
+                array_push($filtered, $filght);
+            }
+        }
+
+        dd($filtered);
     }
 
     //setters & getters

@@ -35,6 +35,7 @@ class NewsApi implements IApi
                 'sort' => "published_desc"
             ]);
 
-        dd($res->getBody()->getContents()); // ->data[0]->title, data[0]->description
+        $res = json_decode($res->getBody()->getContents());
+        return ($res->data); // ->data[0]->title, data[0]->description
     }
 }
