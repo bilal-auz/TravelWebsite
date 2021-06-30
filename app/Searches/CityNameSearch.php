@@ -22,7 +22,7 @@ class CityNameSearch implements ISearch
     private $weatherApi;
     private $imagesApi;
 
-    function __construct(String $cityName, $cityAirportCode)
+    function __construct(String $cityName, String $cityAirportCode)
     {
         $this->cityName = $cityName;
         $this->cityAirportCode = $cityAirportCode;

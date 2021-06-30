@@ -5,6 +5,7 @@ namespace App\Models\Reviews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
+use App\Models\Reviews\City_Review;
 
 class City extends Model
 {
@@ -14,23 +15,23 @@ class City extends Model
     protected $primarykey = '_id';
     protected $fillable = ['city_name'];
 
-    public static function getCityReviews(String $cityName)
+    public static function getCityReviews(String $city_name)
     {
-        $cityReviews = City::where('country_code', $cityName)->first();
-        return $cityReviews;
+        $cityReviews = City::where('city_name', $city_name)->first();
+        return $cityReviews->city_review;
     }
 
-    public static function addCityReview(String $cityName, String $userName, String $review_body)
+    public static function addCityReview(String $city_name, String $user_name, String $review_body)
     {
-        $city = City::where('city_name', $cityName)->get();
+        $city = City::where('city_name', $city_name)->get();
 
         if (sizeof($city) <= 0) {
-            $city = City::create(['city_name' => $cityName]);
+            $city = City::create(['city_name' => $city_name]);
         } else {
             $city = $city[0];
         }
 
-        $city->city_review()->create(['userName' => $userName, 'review_body' => $review_body]);
+        $city->city_review()->create(['user_name' => $user_name, 'review_body' => $review_body]);
 
         return $city;
     }

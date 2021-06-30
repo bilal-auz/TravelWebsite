@@ -23,6 +23,11 @@ use App\APIs\FlightApi;
 use App\APIs\CurrencyApi;
 use App\APIs\HotelsApi;
 use App\APIs\RestaurantsApi;
+use App\Http\Controllers\CityController;
+//controllers
+use App\Http\Controllers\CountryReviewController;
+use App\Http\Controllers\CityReviewController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,14 +88,15 @@ Route::get('/testDBmongodb/{country_code}', function ($country_code) {
     return view('tst2')->with('newReview', $newReview);
 });
 
+/*
 
 #SEARCH BY NAME(Country and City)
-Route::get('/searchByName/Country{countryName}', function ($countryName) {
+Route::get('/searchByName/Country/{countryName}', function ($countryName) {
     // $country = Country::where('country_name', $countryName)->get();
     // dd($country[0]);
 
     $country = Country::getCountryInfo($countryName);
-
+    dd($country);
     $res = Country::searchByName($country->country_name, new CountryNameSearch($country->country_name, $country->alpha_2_code, $country->currency_code));
     return view('countryTest')->with('res', $res);
 });
@@ -98,7 +104,7 @@ Route::get('/searchByName/Country{countryName}', function ($countryName) {
 Route::get('/searchByName/City/{cityName}', function ($cityName) {
     $cityAirportCode = City::getCityAirportCode($cityName);
 
-    $city = City::searchByName(new CityNameSearch($cityName, $cityAirportCode));
+    $city = City::searchByName($cityName);
     dd($city);
 });
 
@@ -125,7 +131,26 @@ route::get('/searchByCriteria/Country', function (Request $request) {
     dd($res);
 });
 
+*/
 
+route::prefix('countryReviews')->group(function () {
+    Route::get('/', [CountryReviewController::class, 'show']);
+    Route::post('/', [CountryReviewController::class, 'store']);
+});
+route::prefix('cityReviews')->group(function () {
+    Route::get('/', [CityReviewController::class, 'show']);
+    Route::post('/', [CityReviewController::class, 'store']);
+});
+
+Route::prefix('/searchByName')->group(function () {
+    Route::get('/Country/{countryName}', [CountryController::class, 'getByName']);
+    Route::get('/City/{cityName}', [CityController::class, 'getByName']);
+});
+
+Route::prefix('/searchByCriteria')->group(function () {
+    Route::get('/Country', [CountryController::class, 'getByCriteria']);
+    Route::get('/City/{cityName}', [CityController::class, 'getByCriteria']);
+});
 
 // Route::get('/tstHotels', function (Request $req) {
 //     error_log("inside");

@@ -34,5 +34,10 @@ class CountryNameSearch implements ISearch
 
     function getAttributes()
     {
+        return [
+            'countryName' => $this->countryName,
+            'countryCode' => $this->countryCode,
+            'currencyCode' => $this->currencyCode
+        ];
     }
 }

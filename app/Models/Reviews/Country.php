@@ -18,7 +18,7 @@ class Country extends Model
     public static function getCountryReviews(String $countryCode)
     {
         $countryReviews = Country::where('country_code', $countryCode)->first();
-        return $countryReviews;
+        return $countryReviews->country_review;
     }
 
     public static function addCountryReviews(String $countryCode, String $userName, String $review_body)

@@ -6,7 +6,7 @@ use App\Lib\ISearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
-use CountryNameSearch;
+use App\Searches\CountryNameSearch;
 
 class Country extends Model
 {
@@ -22,10 +22,19 @@ class Country extends Model
         return $country;
     }
 
-    static public function searchByName(String $countryName, ISearch $searchObj)
+    static public function searchByName($countryName)
     {
         $countryInfo = Country::where('country_name', $countryName)->get()->first();
+
+        $searchObj = new CountryNameSearch(
+            $countryInfo->country_name,
+            $countryInfo->alpha_2_code,
+            $countryInfo->currency_code
+        );
+
         $res = $searchObj->search();
+        // $res = null;
+
         $country = [
             "name" => $countryInfo->country_name,
             "capital" => $countryInfo->capital,
@@ -39,27 +48,23 @@ class Country extends Model
             "news" => $res["news"],
             "currencyRate" => $res["currencyRate"],
         ];
-        // $country['name'] = $countryInfo->country_name;
-        // $country['capital'] = $countryInfo->capital;
-        // $country['language'] = $countryInfo->lang_name;
-        // $country['currencyName'] = $countryInfo->currency_name;
-        // $country['regionalOrg'] = $countryInfo->regional_org;
-        // $country['timeZone'] = $countryInfo->timezone;
-        // $country['continent'] = $countryInfo->continent;
-        // $country['alphaCode'] = $countryInfo->alpha_2_code;
-        // $country['news'] = $res["news"];
-        // $country['currencyRate'] = $res["currencyRate"];
 
+        // dd($country);
         return $country;
     }
+
     static public function searchByCriteria(ISearch $searchObj)
     {
         $data = $searchObj->getAttributes();
 
-        $res = Country::where('lang_name', $data['language'])->where('currency_code', $data['currency'])->where('continent', $data['continent'])->get();
+        $countries = Country::where('lang_name', $data['language'])
+            ->where('currency_code', $data['currency'])
+            ->where('continent', $data['continent'])
+            ->get();
 
-        return $res;
+        return $countries;
     }
+
     public function cities()
     {
         return $this->hasMany(City::class);

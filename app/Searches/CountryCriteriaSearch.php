@@ -24,6 +24,7 @@ class CountryCriteriaSearch implements ISearch
     {
     }
 
+    //this returns the searchObj values
     function getAttributes()
     {
         return [

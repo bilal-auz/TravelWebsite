@@ -31,15 +31,15 @@ class CityCriteriaSearch implements ISearch
 
     function __construct(String $cityName, String $destinationAirportCode, String $hotelMinPrice, String $hotelMaxPrice, String $restaurantMinPrice, String $restaurantMixPrice, String $placeKeyWord, String $flightMinPrice, String $flightMaxPrice)
     {
-        $this->$cityName = $cityName;
-        $this->$destinationAirportCode = $destinationAirportCode;
-        $this->$hotelMinPrice = $hotelMinPrice;
-        $this->$hotelMaxPrice = $hotelMaxPrice;
-        $this->$restaurantMinPrice = $restaurantMinPrice;
-        $this->$restaurantMixPrice = $restaurantMixPrice;
-        $this->$placeKeyWord = $placeKeyWord;
-        $this->$flightMinPrice = $flightMinPrice;
-        $this->$flightMaxPrice = $flightMaxPrice;
+        $this->cityName = $cityName;
+        $this->destinationAirportCode = $destinationAirportCode;
+        $this->hotelMinPrice = $hotelMinPrice;
+        $this->hotelMaxPrice = $hotelMaxPrice;
+        $this->restaurantMinPrice = $restaurantMinPrice;
+        $this->restaurantMixPrice = $restaurantMixPrice;
+        $this->placeKeyWord = $placeKeyWord;
+        $this->flightMinPrice = $flightMinPrice;
+        $this->flightMaxPrice = $flightMaxPrice;
         $this->hotelsApi = HotelsApi::getInstance();
         $this->flightsApi = FlightApi::getInstance();
         $this->restaurantsApi = RestaurantsApi::getInstance();
@@ -50,7 +50,7 @@ class CityCriteriaSearch implements ISearch
 
     function search()
     {
-        return "From Search by criteria, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->cityAirportCode";
+        return "From Search by criteria, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->destinationAirportCode";
         $this->hotelsApi->getHotelsWithPrices($this->destinationAirportCode, $this->hotelMinPrice, $this->hotelMaxPrice);
         $this->flightsApi->getFlightsWithPrices($this->destinationAirportCode, $this->flightMinPrice, $this->flightMaxPrice);
         $this->restaurantsApi->getRestaurantsByPrices($this->cityName, $this->restaurantMinPrice, $this->restaurantMixPrice);
