@@ -28,6 +28,7 @@ class CountryReviewController extends Controller
         // return;
         //save a review
         Country::addCountryReviews($request->input('country_code'), $request->input('user_name'), $request->input('review_body'));
+        return redirect()->back();
     }
 
     // /**

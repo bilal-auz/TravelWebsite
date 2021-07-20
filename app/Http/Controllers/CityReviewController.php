@@ -18,6 +18,7 @@ class CityReviewController extends Controller
     {
         // dd($request->input('city_name'));
         City::addCityReview($request->input('city_name'), $request->input('user_name'), $request->input('review_body'));
+        return redirect()->back();
     }
 
     // /**
