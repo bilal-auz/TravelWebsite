@@ -51,8 +51,8 @@ Route::get('/', function () {
 });
 
 Route::get('/nosql', function (Request $req) {
-    error_log("zbi");
-    tstDB::create(['id' => 1, 'title' => 'zbi kbir']);
+    error_log("noSql");
+    tstDB::create(['id' => 1, 'title' => 'title1']);
     dd($req);
 });
 
@@ -134,7 +134,7 @@ Route::get('/place', function (Request $req) {
 Route::get('/testDBmongodb/{country_code}', function ($country_code) {
     // $res = Country::create(['country_code' => $country_code, 'reviews' => array()]);
     // dd($res);
-    // $newCountry = Country::where('country_code', "ZBI")->get();
+    // $newCountry = Country::where('country_code', "MA")->get();
 
     $newReview = CityReviews::addCityReview($country_code, "Bilal", "jouj");
     // dd($newReview);
@@ -253,7 +253,7 @@ Route::prefix('/searchByCriteria')->group(function () {
 // Route::get('/tstHotels', function (Request $req) {
 //     error_log("inside");
 //     $tst = new CityCriteriaSearch();
-//     $tst->setDestinationAirportCode("ZBI");
+//     $tst->setDestinationAirportCode("CMN");
 //     $tst->setHotelMinPrice(11);
 //     $tst->setHotelMaxPrice(55);
 //     dd($tst->search());
