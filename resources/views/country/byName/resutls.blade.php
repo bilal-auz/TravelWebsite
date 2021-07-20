@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('body')
 {{-- {{ dd($country) }} --}}
+<script src="{{ asset('/js/headerScroll.js') }}" type="text/javascript"></script>
     <div class="main results">
         <div class="header">
             <div class="mainTitle">

@@ -26,7 +26,7 @@
                         <input type="text" name="continent" id="">
                     </div>
                     <div class="formButton">
-                        <button>search</button>
+                        <button onclick="loading();">search</button>
                     </div>
                 </form>
             </div>

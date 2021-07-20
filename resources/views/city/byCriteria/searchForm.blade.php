@@ -43,7 +43,7 @@
                         <input type="text" name="place_keyword" id="">
                     </div>
                     <div class="formButton">
-                        <button>search</button>
+                        <button onclick="loading();">search</button>
                     </div>
                 </form>
             </div>

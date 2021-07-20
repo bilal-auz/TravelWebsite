@@ -58,43 +58,45 @@ class CityCriteriaSearch implements ISearch
         // return "From Search by criteria, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->destinationAirportCode";
 
         error_log('Hotel API');
-        $hotels = $this->hotelsApi->getHotelsWithPrices($this->cityAirportCodes[0], $this->latitude, $this->longitude, $this->hotelMinPrice, $this->hotelMaxPrice);
+        $hotels = $this->hotelsApi->getHotelsWithPrices($this->latitude, $this->longitude, $this->hotelMinPrice, $this->hotelMaxPrice);
 
         error_log('Flight API');
-        $flights = '';
-        try {
-            foreach ($this->cityAirportCodes as $code) {
-                $flights = $this->flightsApi->getFlightsWithPrices($code, $this->flightMinPrice, $this->flightMaxPrice);
+        $flights = [];
+        if (!empty($this->cityAirportCodes)) {
+            try {
+                foreach ($this->cityAirportCodes as $code) {
+                    $flights = $this->flightsApi->getFlightsWithPrices($code, $this->flightMinPrice, $this->flightMaxPrice);
 
-                if (array_key_exists('errors', $flights)) {
-                    continue;
-                }
-
-                if (array_key_exists('meta', $flights)) {
-                    if ($flights->meta->count < 1) {
+                    if (array_key_exists('errors', $flights)) {
                         continue;
                     }
-                    if ($flights->meta->count >= 1) {
 
-                        //manually filtering the by minPrice
-                        $filtered = [];
-                        foreach ($flights->data as $filght) {
-                            if ($filght->price->total >= $this->flightMinPrice) {
-                                array_push($filtered, $filght);
-                            }
+                    if (array_key_exists('meta', $flights)) {
+                        if ($flights->meta->count < 1) {
+                            continue;
                         }
+                        if ($flights->meta->count >= 1) {
 
-                        $flights = $filtered;
+                            //manually filtering the by minPrice
+                            $filtered = [];
+                            foreach ($flights->data as $filght) {
+                                if ($filght->price->total >= $this->flightMinPrice) {
+                                    array_push($filtered, $filght);
+                                }
+                            }
 
-                        break;
+                            $flights = $filtered;
+
+                            break;
+                        }
                     }
                 }
+            } catch (Exception $ex) {
+                echo $ex;
+                dd($flights);
+            } finally {
+                // var_dump($flights);
             }
-        } catch (Exception $ex) {
-            echo $ex;
-            dd($flights);
-        } finally {
-            // var_dump($flights);
         }
 
 

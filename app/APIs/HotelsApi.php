@@ -32,7 +32,7 @@ class HotelsApi implements IApi
         return HotelsApi::$instance;
     }
 
-    function getHotels($destinationAirportCode, $latitude, $longitude)
+    function getHotels($latitude, $longitude)
     {
         // return "Token:" . $this->getToken() . "\nHotels in" . $destinationAirportCode;
         $res = Http::withOptions(['verify' => false])
@@ -58,7 +58,7 @@ class HotelsApi implements IApi
         return json_decode($res->getBody()->getContents());
     }
 
-    function getHotelsWithPrices($destinationAirportCode, $latitude, $longitude, $minPrice, $maxPrice)
+    function getHotelsWithPrices($latitude, $longitude, $minPrice, $maxPrice)
     {
         $res = Http::withOptions(['verify' => false])
             ->withHeaders([

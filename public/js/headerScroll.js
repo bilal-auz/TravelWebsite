@@ -21,3 +21,27 @@ $(function ($) {
         }
     });
 });
+
+window.onload = function () {
+    loadPage();
+};
+
+// $(".header.resultHead").on("load", async function () {
+//     console.log("waiting");
+
+//     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+//     await delay(2000);
+
+//     loadPage();
+// });
+
+function loadPage() {
+    console.log("ready");
+    $(".loadDiv").css("display", "none");
+    $("#section-landing").css("display", "block");
+    $(".footer").css("display", "block");
+}
+
+function loading() {
+    $(".loadDiv").css("display", "block");
+}

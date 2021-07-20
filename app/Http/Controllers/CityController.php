@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use App\Searches\CityNameSearch;
 use App\Searches\CityCriteriaSearch;
 
+//support models
+use App\Models\Reviews\City as CityReviews;
+
+
 class CityController extends MainController
 {
     /**
@@ -48,6 +52,7 @@ class CityController extends MainController
         // $city_airport_code = City::getCityAirportCode($request->input('city_name'));
 
         // $city = City::searchByCriteria($request->cityName);
+        $reviews = CityReviews::getCityReviews($request->cityName);
 
         $airportCodes = City::getCityInfo($request->cityName);
 
@@ -70,6 +75,7 @@ class CityController extends MainController
 
         $city = City::searchByCriteria($citySearch);
 
+        $city['reviews'] = $reviews;
         // dd($city);
 
         return view('city.byCriteria.results')->with('city', $city);

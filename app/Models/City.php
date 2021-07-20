@@ -84,6 +84,7 @@ class City extends Model
     static public function searchByCriteria(ISearch $searchObj)
     {
         $res = $searchObj->search();
+
         return $res;
     }
 

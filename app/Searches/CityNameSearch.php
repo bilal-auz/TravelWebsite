@@ -50,31 +50,33 @@ class CityNameSearch implements ISearch
         // $hotels = $this->hotelsApi->getHotels($this->cityAirportCode);
 
         error_log('Hotel API');
-        $hotels = $this->hotelsApi->getHotels($this->cityAirportCodes[0], $this->latitude, $this->longitude);
+        $hotels = $this->hotelsApi->getHotels($this->latitude, $this->longitude);
 
         error_log('Flight API');
-        $flights = '';
-        try {
-            foreach ($this->cityAirportCodes as $code) {
-                $flights = $this->flightsApi->getFlights($code);
+        $flights = [];
+        if (!empty($this->cityAirportCodes)) {
+            try {
+                foreach ($this->cityAirportCodes as $code) {
+                    $flights = $this->flightsApi->getFlights($code);
 
-                if (array_key_exists('errors', $flights)) {
-                    continue;
-                }
-
-                if (array_key_exists('meta', $flights)) {
-                    if ($flights->meta->count < 1) {
+                    if (array_key_exists('errors', $flights)) {
                         continue;
                     }
-                    if ($flights->meta->count >= 1) {
-                        break;
+
+                    if (array_key_exists('meta', $flights)) {
+                        if ($flights->meta->count < 1) {
+                            continue;
+                        }
+                        if ($flights->meta->count >= 1) {
+                            break;
+                        }
                     }
                 }
+            } catch (Exception $ex) {
+                dd($flights);
+            } finally {
+                // var_dump($flights);
             }
-        } catch (Exception $ex) {
-            dd($flights);
-        } finally {
-            // var_dump($flights);
         }
 
         // $restaurants = $this->restaurantsApi->getRestaurants($this->cityName);

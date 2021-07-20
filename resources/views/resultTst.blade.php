@@ -1,10 +1,9 @@
 @extends('layout.app')
 @section('body')
 {{-- {{ dd($city) }} --}}
-<script src="{{ asset('/js/headerScroll.js') }}" type="text/javascript"></script>
     <div class="main">
         <div class="transparens">
-            <div class="header resultHead"  style="background-image:url($city->image->results[0]->urls->full)" >
+            <div class="header resultHead"  style="background-image:url({{ $city->image->results[0]->urls->full }})" >
                 <div id="blackFilter">
                     <div class="mainTitle">
                         <h1 id='title'><a href="/home">Travel</a></h1>

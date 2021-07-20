@@ -5,9 +5,11 @@
 <script src="{{ asset('/js/headerScroll.js') }}"></script>
     <div class="main">
         <div class="transparens">
-            <div class="header resultHead" @if (count($city['image']->results) > 0)
+            <div class="header resultHead" 
+            @if (count($city['image']->results) > 0)
                 style="background-image: url({{ $city['image']->results[$city['image']->randomIndex]->urls->full }})" 
-            @endif>
+            @endif 
+            loading="eager">
                 <div id="blackFilter">
                     <div class="mainTitle">
                         <h1 id='title'><a href="/home">Travel</a></h1>
