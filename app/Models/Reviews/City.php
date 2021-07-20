@@ -18,6 +18,9 @@ class City extends Model
     public static function getCityReviews(String $city_name)
     {
         $cityReviews = City::where('city_name', $city_name)->first();
+        if (is_null($cityReviews)) {
+            return null;
+        }
         return $cityReviews->city_review;
     }
 

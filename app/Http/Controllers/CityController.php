@@ -27,18 +27,38 @@ class CityController extends MainController
         // $city = City::searchByName($request->input('city_name'));
         $city = City::searchByName($request->cityName); //temp
 
+        // $file = fopen('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city', 'w');
+        // // fwrite($file, json_encode($city));
+        // fwrite($file, $city);
+        // fclose($file);
+
+        // file_put_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city', json_encode($city));
+
+        // $city = file_get_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city');
+
+        // $city = json_decode($city);
+
+        // dd($city);
+
         return view('city.byName.results')->with('city', $city);
     }
 
     public function getByCriteria(Request $request)
     {
-        // dd($request->cityName);
         // $city_airport_code = City::getCityAirportCode($request->input('city_name'));
-        $city_airport_code = City::getCityAirportCode($request->cityName); //temp
 
-        $city = City::searchByCriteria(new CityCriteriaSearch(
+        // $city = City::searchByCriteria($request->cityName);
+
+        $airportCodes = City::getCityInfo($request->cityName);
+
+        $coords = City::getCityCoords($request->cityName);
+
+
+        $citySearch = new CityCriteriaSearch(
             $request->cityName,
-            $city_airport_code,
+            $airportCodes,
+            $coords->lat,
+            $coords->lng,
             $request->hotel_min_price,
             $request->hotel_max_price,
             $request->restaurant_min_price,
@@ -46,16 +66,11 @@ class CityController extends MainController
             $request->place_keyword,
             $request->flight_min_price,
             $request->flight_max_price
-            // $request->input('city_name'),
-            // $city_airport_code,
-            // $request->input('hotel_min_price'),
-            // $request->input('hotel_max_price'),
-            // $request->input('restaurant_min_price'),
-            // $request->input('restaurants_max_price'),
-            // $request->input('place_keyword'),
-            // $request->input('flight_min_price'),
-            // $request->input('flight_max_price')
-        ));
+        );
+
+        $city = City::searchByCriteria($citySearch);
+
+        // dd($city);
 
         return view('city.byCriteria.results')->with('city', $city);
     }

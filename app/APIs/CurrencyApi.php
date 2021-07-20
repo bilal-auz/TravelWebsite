@@ -34,6 +34,10 @@ class CurrencyApi implements IApi
             'amount' => $this::amount
         ]);
         $res = json_decode($res->getBody()->getContents());
-        return ($res->result); //$res->result
+        $response = [
+            "query" => $res->query,
+            "result" => $res->result
+        ];
+        return ($response); //$res->result
     }
 }

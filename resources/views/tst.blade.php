@@ -7,11 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ $newReview->country_code }}</h1>
-    @foreach ($newReview->country_review as $review)
-        <p>UserName:{{ $review->userName }}</p>
-        <p>Review:{{ $review->review_body }}</p>
-        <hr>
-    @endforeach
+<img src="{{ $link }}" alt="">
 </body>
 </html>

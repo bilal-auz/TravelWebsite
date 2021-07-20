@@ -27,7 +27,9 @@ class CountryNameSearch implements ISearch
     {
         $data = [];
         $data["news"] = $this->newsApi->getNews($this->countryCode);
-        $data["currencyRate"] = $this->currencyApi->convert($this->currencyCode);
+        $data["currencyConvert"] = $this->currencyApi->convert($this->currencyCode);
+
+        $data['flagImage'] = null;
         return $data;
         // dd($data);
     }

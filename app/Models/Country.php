@@ -6,6 +6,7 @@ use App\Lib\ISearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
+use App\Models\Reviews\Country as ReviewsCountry;
 use App\Searches\CountryNameSearch;
 
 class Country extends Model
@@ -26,6 +27,11 @@ class Country extends Model
     {
         $countryInfo = Country::where('country_name', $countryName)->get()->first();
 
+        $reviews = ReviewsCountry::getCountryReviews($countryInfo->alpha_2_code);
+
+        // $cities = City::getCitiesInCountry("united states");
+        $cities = $countryInfo->cities();
+
         $searchObj = new CountryNameSearch(
             $countryInfo->country_name,
             $countryInfo->alpha_2_code,
@@ -36,20 +42,25 @@ class Country extends Model
         // $res = null;
 
         $country = [
+            "Flag" => $res["flagImage"],
             "name" => $countryInfo->country_name,
             "capital" => $countryInfo->capital,
             "language" => $countryInfo->lang_name,
             "currencyName" => $countryInfo->currency_name,
+            "currencyCode" => $countryInfo->currency_code,
             "regionalOrg" => $countryInfo->regional_org,
             "timeZone" => $countryInfo->timezone,
             "continent" => $countryInfo->continent,
             "alphaCode" => $countryInfo->alpha_2_code,
-            "cities" => null,
+            "cities" => $cities,
             "news" => $res["news"],
-            "currencyRate" => $res["currencyRate"],
+            "currencyConvert" => $res["currencyConvert"],
+            "reviews" => $reviews
         ];
 
-        // dd($country);
+
+
+
         return $country;
     }
 
@@ -57,9 +68,11 @@ class Country extends Model
     {
         $data = $searchObj->getAttributes();
 
-        $countries = Country::where('lang_name', $data['language'])
+        $countries = Country::SELECT('country_name')
+            ->where('lang_name', $data['language'])
             ->where('currency_code', $data['currency'])
             ->where('continent', $data['continent'])
+            ->orderBy('country_name', 'ASC')
             ->get();
 
         return $countries;
@@ -67,6 +80,7 @@ class Country extends Model
 
     public function cities()
     {
-        return $this->hasMany(City::class);
+        $cities = $this->hasMany(City::class, 'country_name', 'country_name');
+        return $cities->take(50)->get();
     }
 }

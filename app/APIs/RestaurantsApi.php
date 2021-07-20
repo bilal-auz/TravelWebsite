@@ -41,7 +41,7 @@ class RestaurantsApi implements IApi
                 'limit' => $this::responseLimit
             ]);
 
-        dd($res->getBody()->getContents()); //->results->data[0]->name, ->results->data[0]->price("MAD 89 - MAD 133") not fixed
+        return ($res->getBody()->getContents()); //->results->data[0]->name, ->results->data[0]->price("MAD 89 - MAD 133") not fixed
     }
 
     function getRestaurantsWithPrices(String $cityName, int $minPrice, int $maxPrice)
@@ -71,6 +71,7 @@ class RestaurantsApi implements IApi
             ]);
 
         $res = json_decode($res->getBody()->getContents());
+        dd($res);
         return $res->results->data[0]->result_object->location_id; //->results->data[0]->result_object->location_id
     }
 }

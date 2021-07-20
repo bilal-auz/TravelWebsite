@@ -9,7 +9,7 @@ class ImagesApi implements IApi
 {
     private static $instance = null;
     private const apiKey = "yMg5RU9W7L8auvX5oHbIWdZ0NW8OyXmPyaisQpesONk";
-    private $responseLimit = "1";
+    private $responseLimit = "50";
     private const endpoint = "https://api.unsplash.com/search/photos";
 
     //singlton
@@ -33,9 +33,14 @@ class ImagesApi implements IApi
             ])->get($this::endpoint, [
                 'page' => 1,
                 'query' => $cityName,
-                'per_page' => $this->responseLimit
+                'per_page' => $this->responseLimit,
+                "order_by" => "relevant"
             ]);
 
-        dd($res->getBody()->getContents()); // ->results[0]->urls->small, link for the photos
+        $images = json_decode($res->getBody()->getContents());
+
+        $images->randomIndex = random_int(0, count($images->results) / 2);
+
+        return $images; //->results[0]->urls->small, link for the photos
     }
 }

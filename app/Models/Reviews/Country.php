@@ -18,6 +18,11 @@ class Country extends Model
     public static function getCountryReviews(String $countryCode)
     {
         $countryReviews = Country::where('country_code', $countryCode)->first();
+
+        if (is_null($countryReviews)) {
+            return null;
+        }
+
         return $countryReviews->country_review;
     }
 
@@ -31,7 +36,7 @@ class Country extends Model
             $counrty = $counrty[0];
         }
 
-        $counrty->country_review()->create(['userName' => $userName, 'review_body' => $review_body]);
+        $counrty->country_review()->create(['user_name' => $userName, 'review_body' => $review_body]);
 
         return $counrty;
     }

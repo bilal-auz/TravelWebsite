@@ -34,8 +34,10 @@ class FlightApi implements IApi
         return FlightApi::$instance;
     }
 
-    function getFlights(String $destinationAirportCode)
+    function getFlights($destinationAirportCode)
     {
+        // echo "FLight API";
+
         $res = Http::withOptions(['verify' => false])->withHeaders([
             'Authorization' => 'Bearer ' . $this->getToken()
         ])->get($this::flightEndpoint, [
@@ -45,11 +47,14 @@ class FlightApi implements IApi
             'adults' => '1',
             'currencyCode' => $this::currency
         ]);
+        $res = json_decode($res->getBody()->getContents());
 
-        dd(json_decode($res->getBody()->getContents()));
+
+
+        return ($res);
     }
 
-    function getFlightsWithPrice(String $destinationAirportCode, int $minPrice, int $maxPrice)
+    function getFlightsWithPrices($destinationAirportCode, $minPrice, $maxPrice)
     {
         $res = Http::withOptions(['verify' => false])
             ->withHeaders([
@@ -68,15 +73,12 @@ class FlightApi implements IApi
 
         $res = json_decode($res->getBody()->getContents());
 
-        $filtered = [];
-        //manually filtering the by minPrice
-        foreach ($res->data as $filght) {
-            if ($filght->price->total >= $minPrice) {
-                array_push($filtered, $filght);
-            }
-        }
 
-        dd($filtered);
+        // dd($res->data[0]);
+
+        // dd($filtered);
+
+        return $res;
     }
 
     //setters & getters

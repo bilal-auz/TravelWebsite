@@ -26,15 +26,21 @@ class PlaceToDiscover implements IApi
 
     function getRandPlace(String $cityName)
     {
+        $cityName = ucfirst(strtolower($cityName));
+
         $res = Http::withOptions(['verify' => false])
+            ->withHeaders([
+                'X-Triposo-Account' => $this::x_Triposo_Account,
+                'X-Triposo-Token' => $this::x_Triposo_Token
+            ])
             ->get($this::endpoint, [
                 'location_id' => $cityName,
-                'count' => $this->reponseLimit,
+                'count' => $this::responseLimit,
                 'fields' => "id,name,score,intro,location_id,location_ids",
                 'order_by' => "-score"
             ]);
 
-        dd($res->getBody->getContenet()); // ->results[0]->name
+        return json_decode($res->getBody()->getContents()); // ->results[0]->name
     }
 
     function getPlacesByLabel(String $cityName, String $label)
@@ -42,12 +48,12 @@ class PlaceToDiscover implements IApi
         $res = Http::withOptions(['verify' => false])
             ->get($this::endpoint, [
                 'location_id' => $cityName,
-                'count' => $this->reponseLimit,
+                'count' => $this::responseLimit,
                 'tag_labels' => $label,
                 'fields' => "id,name,score,intro,tag_labels,location_id,location_ids",
                 'order_by' => "-score"
             ]);
 
-        dd($res->getBody->getContenet()); // ->results[0]->name, ->results[0]->intro
+        return ($res->getBody()->getContents()); // ->results[0]->name, ->results[0]->intro
     }
 }

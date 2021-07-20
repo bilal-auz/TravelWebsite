@@ -21,15 +21,31 @@ class WeatherApi implements IApi
         return WeatherApi::$instance;
     }
 
-    function getWeather(String $cityName)
+    function getWeather($latitude, $longitude)
     {
         $res = Http::withOptions(['verify' => false])
             ->get($this::endpoint, [
-                "q" => $cityName,
+                // "q" => $cityName,
+                "lat" => $latitude,
+                "lon" => $longitude,
                 "appid" => $this::apiKey,
                 "units" => 'metric' // for Celsius 
             ]);
 
-        dd($res->getBody()->getContents()); // ->main->temp
+        $res = json_decode($res->getBody()->getContents());
+        $res->main->temp = explode(".", $res->main->temp, 99)[0];
+        // return json_decode($res->getBody()->getContents()); // ->main->temp
+        return $res;
     }
+
+    // function getCityCoords($cityName)
+    // {
+    //     $res = $this->getWeather($cityName);
+    //     $coord = [
+    //         'lat' => $res->coord->lat,
+    //         'lon' => $res->coord->lon
+    //     ];
+
+    //     return $coord;
+    // }
 }

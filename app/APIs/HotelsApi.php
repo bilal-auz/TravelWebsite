@@ -32,7 +32,7 @@ class HotelsApi implements IApi
         return HotelsApi::$instance;
     }
 
-    function getHotels(String $destinationAirportCode)
+    function getHotels($destinationAirportCode, $latitude, $longitude)
     {
         // return "Token:" . $this->getToken() . "\nHotels in" . $destinationAirportCode;
         $res = Http::withOptions(['verify' => false])
@@ -40,43 +40,52 @@ class HotelsApi implements IApi
                 'Authorization' => 'Bearer ' . $this->getToken()
             ])
             ->get($this::hotelsEndpoint, [
-                'cityCode' => $destinationAirportCode,
+                // 'cityCode' => $destinationAirportCode,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'roomQuantity' => 1,
                 'adults' => 2,
-                'radius' => 5,
+                'radius' => 200,
                 'radiusUnit' => "KM",
                 'paymentPolicy' => "NONE",
-                'includeClosed' => false,
-                'bestRateOnly' => true,
-                'view' => "FULL",
+                'includeClosed' => true,
+                'bestRateOnly' => false,
+                'view' => "NONE",
                 'sort' => "NONE"
             ]);
 
-        dd(json_decode($res->getBody()->getContents()));
+        // dd($res->getBody()->getContents());
+        return json_decode($res->getBody()->getContents());
     }
 
-    function getHotelsWithPrices(String $destinationAirportCode, int $minPrice, int $maxPrice)
+    function getHotelsWithPrices($destinationAirportCode, $latitude, $longitude, $minPrice, $maxPrice)
     {
-        // return "Token:" . $this->getToken() . "\nHotels in" . $destinationAirportCode . ", From:" . $minPrice . " TO:" . $maxPrice;
         $res = Http::withOptions(['verify' => false])
             ->withHeaders([
                 'Authorization' => 'Bearer ' . $this->getToken()
             ])
             ->get($this::hotelsEndpoint, [
-                'cityCode' => $destinationAirportCode,
+                // 'cityCode' => $destinationAirportCode,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'roomQuantity' => 1,
                 'adults' => 2,
-                'radius' => 5,
+                'radius' => 200,
                 'radiusUnit' => "KM",
                 'paymentPolicy' => "NONE",
-                'includeClosed' => false,
-                'bestRateOnly' => true,
-                'view' => "FULL",
-                'sort' => "NONE",
-                'priceRange' => $minPrice . '-' . $maxPrice
+                "includeClosed" => false,
+                'bestRateOnly' => false,
+                'view' => "NONE",
+                'sort' => "DISTANCE",
+                'priceRange' => $minPrice . '-' . $maxPrice,
+                'currency' => $this::currency
             ]);
 
-        dd(json_decode($res->getBody()->getContents()));
+        $hotels = json_decode($res->getBody()->getContents());
+
+        // dd($hotels);
+
+        return ($hotels);
     }
 
 

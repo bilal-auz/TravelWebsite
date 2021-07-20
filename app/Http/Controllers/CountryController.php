@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 //Searches
 use App\Searches\CountryNameSearch;
 use App\Searches\CountryCriteriaSearch;
+use Illuminate\Support\Facades\Storage;
 
 class CountryController extends MainController
 {
@@ -20,17 +21,28 @@ class CountryController extends MainController
      */
     public function index()
     {
-        //
     }
 
     public function getByName(Request $request)
     {
         // dd($request->countryName);
         // $country = Country::searchByName($request->input('country_name'));
+
         $country = Country::searchByName($request->countryName);
 
+        // $file = fopen('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\country', 'w');
+
+        // fwrite($file, json_encode($country));
+        // fclose($file);
         // dd($country);
-        return view('country.byName.resutls')->with('country', json_encode($country));
+
+
+        // $country = file_get_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\country');
+
+
+        // return view('country.byName.resutls')->with('country', json_decode($country, true));
+
+        return view('country.byName.resutls')->with('country', $country);
     }
 
     public function getByCriteria(Request $request)
@@ -40,9 +52,6 @@ class CountryController extends MainController
             $request->language,
             $request->currency,
             $request->continent
-            // $request->input('language'),
-            // $request->input('currency'),
-            // $request->input('continent')
         ));
 
         return view('country.byCriteria.results')->with('countries', $countries);

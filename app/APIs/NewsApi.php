@@ -36,6 +36,7 @@ class NewsApi implements IApi
             ]);
 
         $res = json_decode($res->getBody()->getContents());
-        return ($res->data[0]->title); // ->data[0]->title, data[0]->description
+        // dd($res);
+        return ($res); // ->data[0]->title, data[0]->description
     }
 }
