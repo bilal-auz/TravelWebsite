@@ -32,7 +32,7 @@ class CityCriteriaSearch implements ISearch
     private $weatherApi;
     private $imagesApi;
 
-    function __construct(String $cityName, $cityAirportCodes, $latitude, $longitude, String $hotelMinPrice, String $hotelMaxPrice, $restaurantMinPrice, $restaurantMixPrice, String $placeKeyWord, String $flightMinPrice, String $flightMaxPrice)
+    function __construct(String $cityName, $cityAirportCodes, $latitude, $longitude, $hotelMinPrice, $hotelMaxPrice, $restaurantMinPrice, $restaurantMixPrice, $placeKeyWord, $flightMinPrice, $flightMaxPrice)
     {
         $this->cityName = $cityName;
         $this->cityAirportCodes = $cityAirportCodes;
@@ -58,9 +58,11 @@ class CityCriteriaSearch implements ISearch
         // return "From Search by criteria, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->destinationAirportCode";
 
         error_log('Hotel API');
-        $hotels = $this->hotelsApi->getHotelsWithPrices($this->latitude, $this->longitude, $this->hotelMinPrice, $this->hotelMaxPrice);
+        // $hotels = $this->hotelsApi->getHotelsWithPrices($this->latitude, $this->longitude, $this->hotelMinPrice, $this->hotelMaxPrice);
+        $hotels = $this->getHotels($this->latitude, $this->longitude, $this->hotelMinPrice, $this->hotelMaxPrice);
 
         error_log('Flight API');
+        /*
         $flights = [];
         if (!empty($this->cityAirportCodes)) {
             try {
@@ -98,23 +100,29 @@ class CityCriteriaSearch implements ISearch
                 // var_dump($flights);
             }
         }
+        */
+        $flights = $this->getFlights($this->cityAirportCodes, $this->flightMinPrice, $this->flightMaxPrice);
 
 
         error_log('Restaurants API');
         // Getting Restaurants by prices is Not Avaliable due to API
-        $restaurants = $this->restaurantsApi->getRestaurants($this->latitude, $this->longitude, $this->restaurantMinPrice, $this->restaurantMixPrice);
+        // $restaurants = $this->restaurantsApi->getRestaurants($this->latitude, $this->longitude, $this->restaurantMinPrice, $this->restaurantMixPrice);
+        $restaurants = $this->getRestaurants($this->latitude, $this->longitude, $this->restaurantMinPrice, $this->restaurantMixPrice);
 
         error_log('Place API');
-        $places = $this->placeToDiscover->getPlacesByLabel($this->cityName, $this->placeKeyWord);
+        // $places = $this->placeToDiscover->getPlacesByLabel($this->cityName, $this->placeKeyWord);
+        $places = $this->getPlaces($this->cityName, $this->placeKeyWord);
 
         error_log('weather API');
-        $weather = $this->weatherApi->getWeather(
-            $this->latitude,
-            $this->longitude
-        );
+        // $weather = $this->weatherApi->getWeather(
+        //     $this->latitude,
+        //     $this->longitude
+        // );
+        $weather = $this->getWeather($this->latitude, $this->longitude);
 
         error_log('images API');
-        $image = $this->imagesApi->getImage($this->cityName . ' town');
+        // $image = $this->imagesApi->getImage($this->cityName . ' town');
+        $image = $this->getImages($this->cityName . ' town');
 
         $city = [
             'name' => $this->cityName,
@@ -129,6 +137,99 @@ class CityCriteriaSearch implements ISearch
 
         return $city;
     }
+
+    private function getHotels($latitude, $longitude, $hotelMinPrice, $hotelMaxPrice)
+    {
+        return $this->hotelsApi->getHotelsWithPrices($latitude, $longitude, $hotelMinPrice, $hotelMaxPrice);
+    }
+
+
+    private function getFlights($cityAirportCodes, $flightMinPrice, $flightMaxPrice)
+    {
+        if (is_null($flightMinPrice)) {
+            $flightMinPrice = 0;
+        }
+
+        if (is_null($flightMaxPrice)) {
+            $flightMaxPrice = 999999;
+        }
+
+        $flights = [];
+        if (!empty($cityAirportCodes)) {
+            try {
+                foreach ($cityAirportCodes as $code) {
+                    $flights = $this->flightsApi->getFlightsWithPrices($code, $flightMinPrice, $flightMaxPrice);
+
+                    if (array_key_exists('errors', $flights)) {
+                        continue;
+                    }
+
+                    if (array_key_exists('meta', $flights)) {
+                        if ($flights->meta->count < 1) {
+                            continue;
+                        }
+                        if ($flights->meta->count >= 1) {
+
+                            //manually filtering the by minPrice
+                            $filtered = [];
+                            foreach ($flights->data as $filght) {
+                                if ($filght->price->total >= $flightMinPrice) {
+                                    array_push($filtered, $filght);
+                                }
+                            }
+
+                            $flights = $filtered;
+
+                            break;
+                        }
+                    }
+                }
+            } catch (Exception $ex) {
+                dd($flights);
+            } finally {
+                // var_dump($flights);
+            }
+        }
+
+        return $flights;
+    }
+
+
+    private function getRestaurants($latitude, $longitude, $restaurantMinPrice, $restaurantMaxPrice)
+    {
+        if (is_null($restaurantMinPrice)) {
+            $restaurantMinPrice = 0;
+        }
+
+        if (is_null($restaurantMaxPrice)) {
+            $restaurantMaxPrice = 99999;
+        }
+
+        return $this->restaurantsApi->getRestaurants($latitude, $longitude, $restaurantMinPrice, $restaurantMaxPrice);
+    }
+
+
+    private function getPlaces($cityName, $placeKeyWord)
+    {
+        if (is_null($placeKeyWord)) {
+            return $this->placeToDiscover->getRandPlace($cityName);
+        }
+
+        return $this->placeToDiscover->getPlacesByLabel($cityName, $placeKeyWord);
+    }
+
+
+    private function getWeather($latitude, $longitude)
+    {
+        return $this->weatherApi->getWeather($latitude, $longitude);
+    }
+
+
+    private function getImages($cityName)
+    {
+        return $this->imagesApi->getImage($cityName);
+    }
+
 
     function getAttributes()
     {

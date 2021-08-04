@@ -17,6 +17,12 @@ class CityReviewController extends Controller
     public function store(Request $request)
     {
         // dd($request->input('city_name'));
+
+        /***
+         * 
+         * add country_code of the city because some cities got same name *
+         * 
+         ***/
         City::addCityReview($request->input('city_name'), $request->input('user_name'), $request->input('review_body'));
         return redirect()->back();
     }
@@ -29,6 +35,11 @@ class CityReviewController extends Controller
     //  */
     public function show(Request $request)
     {
+        /***
+         * 
+         * add country_code of the city because some cities got same name *
+         * 
+         ***/
         return City::getCityReviews($request->city_name);
     }
 

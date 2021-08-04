@@ -50,13 +50,60 @@ class CityNameSearch implements ISearch
         // $hotels = $this->hotelsApi->getHotels($this->cityAirportCode);
 
         error_log('Hotel API');
-        $hotels = $this->hotelsApi->getHotels($this->latitude, $this->longitude);
+        // $hotels = $this->hotelsApi->getHotels($this->latitude, $this->longitude);
+        $hotels = $this->getHotels($this->latitude, $this->longitude);
 
         error_log('Flight API');
+        $flights = $this->getFlights($this->cityAirportCodes);
+
+
+        // $restaurants = $this->restaurantsApi->getRestaurants($this->cityName);
+        error_log('Restaurants API');
+        // $restaurants = $this->restaurantsApi->getRestaurants($this->latitude, $this->longitude);
+        $restaurants = $this->getRestaurants($this->latitude, $this->longitude);
+
+
+        error_log('Place API');
+        // $places = $this->placeToDiscover->getRandPlace($this->cityName);
+        $places = $this->getPlaces($this->cityName);
+
+        error_log('weather API');
+        // $weather = $this->weatherApi->getWeather(
+        //     $this->latitude,
+        //     $this->longitude
+        // );
+        $weather = $this->getWeather($this->latitude, $this->longitude);
+
+        error_log('images API');
+        // $image = $this->imagesApi->getImage($this->cityName);
+        $image = $this->getImages($this->cityName);
+
+        $city = [
+            'name' => $this->cityName,
+            'airportCode' => $this->cityAirportCodes,
+            'hotels' => $hotels,
+            'flights' => $flights,
+            'restaurants' => $restaurants,
+            'places' => $places,
+            'weather' => $weather,
+            'image' => $image,
+        ];
+
+        return $city;
+    }
+
+    private function getHotels($latitude, $longitude)
+    {
+        return $this->hotelsApi->getHotels($latitude, $longitude);
+    }
+
+
+    private function getFlights($cityAirportCodes)
+    {
         $flights = [];
-        if (!empty($this->cityAirportCodes)) {
+        if (!empty($cityAirportCodes)) {
             try {
-                foreach ($this->cityAirportCodes as $code) {
+                foreach ($cityAirportCodes as $code) {
                     $flights = $this->flightsApi->getFlights($code);
 
                     if (array_key_exists('errors', $flights)) {
@@ -79,35 +126,33 @@ class CityNameSearch implements ISearch
             }
         }
 
-        // $restaurants = $this->restaurantsApi->getRestaurants($this->cityName);
-        error_log('Restaurants API');
-        $restaurants = $this->restaurantsApi->getRestaurants($this->latitude, $this->longitude);
-
-        error_log('Place API');
-        $places = $this->placeToDiscover->getRandPlace($this->cityName);
-
-        error_log('weather API');
-        $weather = $this->weatherApi->getWeather(
-            $this->latitude,
-            $this->longitude
-        );
-
-        error_log('images API');
-        $image = $this->imagesApi->getImage($this->cityName);
-
-        $city = [
-            'name' => $this->cityName,
-            'airportCode' => $this->cityAirportCodes,
-            'hotels' => $hotels,
-            'flights' => $flights,
-            'restaurants' => $restaurants,
-            'places' => $places,
-            'weather' => $weather,
-            'image' => $image,
-        ];
-
-        return $city;
+        return $flights;
     }
+
+
+    private function getRestaurants($latitude, $longitude)
+    {
+        return $this->restaurantsApi->getRestaurants($latitude, $longitude);
+    }
+
+
+    private function getPlaces($cityName)
+    {
+        return $this->placeToDiscover->getRandPlace($cityName);
+    }
+
+
+    private function getWeather($latitude, $longitude)
+    {
+        return $this->weatherApi->getWeather($latitude, $longitude);
+    }
+
+
+    private function getImages($cityName)
+    {
+        return $this->imagesApi->getImage($cityName);
+    }
+
 
     function getAttributes()
     {

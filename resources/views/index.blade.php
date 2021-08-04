@@ -17,7 +17,7 @@
             <h2 id="bottomSentence">Your Next Destination</h2>
         </div>
     </div>
-    <div class="searchSymbol" onclick="alert('slide')">
+    <div class="searchSymbol" onclick="document.getElementsByClassName('searchSection')[0].scrollIntoView({behavior: 'smooth'})">
         <p id="searchBtn"> 
             <img src="{{ asset('images/searchSymbol.svg') }}" alt="search"/>
         </p>

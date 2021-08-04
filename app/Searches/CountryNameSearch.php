@@ -26,13 +26,27 @@ class CountryNameSearch implements ISearch
     function search()
     {
         $data = [];
-        $data["news"] = $this->newsApi->getNews($this->countryCode);
-        $data["currencyConvert"] = $this->currencyApi->convert($this->currencyCode);
+        // $data["news"] = $this->newsApi->getNews($this->countryCode);
+        $data["news"] = $this->getNews($this->countryCode);
+
+        // $data["currencyConvert"] = $this->currencyApi->convert($this->currencyCode);
+        $data["currencyConvert"] = $this->getCurrency($this->currencyCode);
 
         $data['flagImage'] = null;
         return $data;
         // dd($data);
     }
+
+    private function getNews($countryCode)
+    {
+        return $this->newsApi->getNews($countryCode);
+    }
+
+    private function getCurrency($currencyCode)
+    {
+        return $this->currencyApi->convert($currencyCode);
+    }
+
 
     function getAttributes()
     {

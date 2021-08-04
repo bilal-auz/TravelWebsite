@@ -40,12 +40,18 @@ class PlaceToDiscover implements IApi
                 'order_by' => "-score"
             ]);
 
-        return json_decode($res->getBody()->getContents()); // ->results[0]->name
+        $res = json_decode($res->getBody()->getContents()); // ->results[0]->name
+
+        return $res;
     }
 
     function getPlacesByLabel(String $cityName, String $label)
     {
         $res = Http::withOptions(['verify' => false])
+            ->withHeaders([
+                'X-Triposo-Account' => $this::x_Triposo_Account,
+                'X-Triposo-Token' => $this::x_Triposo_Token
+            ])
             ->get($this::endpoint, [
                 'location_id' => $cityName,
                 'count' => $this::responseLimit,

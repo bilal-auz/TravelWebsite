@@ -1,6 +1,5 @@
 @extends('layout.app')
 @section('body')
-<script src="{{ asset('/js/headerScroll.js') }}" type="text/javascript"></script>
     <div class="main searchForm">
         <div class="header">
             <div class="mainTitle">

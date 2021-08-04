@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="col1_2">
-                        <div class="blured" style="background-image: url({{ asset('/images/pattrenPlane.svg') }});">
+                        <div class="blured" style="background-image: url({{ asset('/images/foodPP.svg') }});">
                             <div class="slider restaurants">
                                 <h3>Restaurants</h3>
                                 @foreach ($city->restaurants->results->items as $restaurant)

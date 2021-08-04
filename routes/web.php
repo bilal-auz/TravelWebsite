@@ -67,7 +67,7 @@ Route::get('/date', function (Request $req) {
 Route::get('/hotels', function (Request $req) {
     $hotels = HotelsApi::getInstance();
 
-    $codes = City::getCityInfo('khartoum');
+    $codes = City::getCityAirportCodes('khartoum');
 
     $coord = City::getCityCoords('khartoum');
     dd($coord);
@@ -80,7 +80,7 @@ Route::get('/flights', function (Request $req) {
 
     // $city = "new York";
 
-    // $codes = City::getCityInfo($city);
+    // $codes = City::getCityAirportCodes($city);
 
     // $coord = $weather->getCityCoord($city);
 
@@ -126,7 +126,7 @@ Route::get('/res', function (Request $req) {
 
 Route::get('/place', function (Request $req) {
     $place = PlaceToDiscover::getInstance();
-    $res = $place->getRandPlace("casaBlAnca");
+    $res = $place->getPlacesByLabel("paris", "Beach");
     dd($res);
 });
 

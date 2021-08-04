@@ -33,7 +33,7 @@ class City extends Model
 
         return $cities;
     }
-    static function getCityInfo($cityName)
+    static function getCityAirportCodes($cityName)
     {
         $cityInfo = City::where('city_name', $cityName)
             ->Where('airport_code_iata', '!=', "\\N")
@@ -59,7 +59,7 @@ class City extends Model
 
     static public function searchByName($cityName)
     {
-        $airportCodes = City::getCityInfo($cityName);
+        $airportCodes = City::getCityAirportCodes($cityName);
 
         $coords = City::getCityCoords($cityName);
 
@@ -86,20 +86,5 @@ class City extends Model
         $res = $searchObj->search();
 
         return $res;
-    }
-
-    static public function getCityAirportCode(String $cityName)
-    {
-        // !!some cities got more than one airport, we can use them as backup if the API couldn't find the city
-        $airports = City::where('city_name', $cityName)->get()->first();
-        return $airports->airport_code_iata;
-
-        $x = [];
-        foreach ($airports as $airportCode) {
-            array_push($x, $airportCode->airport_code_iata);
-        }
-
-        return $x;
-        // dd($x);
     }
 }

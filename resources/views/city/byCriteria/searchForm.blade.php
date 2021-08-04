@@ -14,25 +14,25 @@
             <div class="formContainer">
                 <form action="{{ route('city.criteriaSearch') }}" method="GET">
                     <div>
-                        <label for="cityName">City Name</label>
+                        <label for="cityName">City Name<span>(required)</span></label>
                         <input type="text" name="cityName" id="">
                     </div>
                     <div class="smallInput">
-                        <label for="hotel_min_price">Hotel Price</label>
+                        <label for="hotel_min_price">Hotel Price<span>(MAD)</span></label>
                         <div>
                             <input type="text" name="hotel_min_price" id="" placeholder="min">
                             <input type="text" name="hotel_max_price" id="" placeholder="max">
                         </div>
                     </div>
                     <div class="smallInput">
-                        <label for="restaurant_min_price">Restaurant Price</label>
+                        <label for="restaurant_min_price">Restaurant Price<span>(MAD)</span></label>
                         <div>
-                            <input   style="background-color: grey; border-radius:5px" disabled type="text" name="restaurant_min_price" id="" placeholder="min">
-                            <input   style="background-color: grey; border-radius:5px" disabled type="text" name="restaurants_max_price" id="" placeholder="max">
+                            <input style="background-color: grey; border-radius:5px" disabled type="text" name="restaurant_min_price" id="" placeholder="min">
+                            <input style="background-color: grey; border-radius:5px" disabled type="text" name="restaurants_max_price" id="" placeholder="max">
                         </div>
                     </div>
                     <div class="smallInput">
-                        <label for="flight_min_price">Flight Price</label>
+                        <label for="flight_min_price">Flight Price<span>(MAD)</span></label>
                         <div>
                             <input type="text" name="flight_min_price" id="" placeholder="min">
                             <input type="text" name="flight_max_price" id="" placeholder="max">
@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <label for="place_keyword">Place keyword</label>
-                        <input type="text" name="place_keyword" id="">
+                        <input type="text" name="place_keyword" id="" disabled style="background-color: grey; border-radius:5px">
                     </div>
                     <div class="formButton">
                         <button onclick="loading();">search</button>

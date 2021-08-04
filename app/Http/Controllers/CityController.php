@@ -54,7 +54,7 @@ class CityController extends MainController
         // $city = City::searchByCriteria($request->cityName);
         $reviews = CityReviews::getCityReviews($request->cityName);
 
-        $airportCodes = City::getCityInfo($request->cityName);
+        $airportCodes = City::getCityAirportCodes($request->cityName);
 
         $coords = City::getCityCoords($request->cityName);
 
@@ -76,6 +76,8 @@ class CityController extends MainController
         $city = City::searchByCriteria($citySearch);
 
         $city['reviews'] = $reviews;
+        // dd($city);
+
         // dd($city);
 
         return view('city.byCriteria.results')->with('city', $city);

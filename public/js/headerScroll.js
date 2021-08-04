@@ -12,36 +12,27 @@ $(window).bind("mousewheel DOMMouseScroll", function (event) {
     }
 });
 
-$(function ($) {
-    $(".item p.name").each(function () {
-        var charCount = $(this).text().length;
-        // $(this).css("font-size", "2.2em");
-        if (charCount > 82) {
-            $(this).css("font-size", parseInt($(this).css("font-size")) * 0.9);
-        }
-    });
-});
-
-window.onload = function () {
-    loadPage();
-};
-
-// $(".header.resultHead").on("load", async function () {
-//     console.log("waiting");
-
-//     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-//     await delay(2000);
-
-//     loadPage();
+// $(function ($) {
+//     $(".item p.name").each(function () {
+//         var charCount = $(this).text().length;
+//         // $(this).css("font-size", "2.2em");
+//         if (charCount > 82) {
+//             $(this).css("font-size", parseInt($(this).css("font-size")) * 0.9);
+//         }
+//     });
 // });
 
-function loadPage() {
-    console.log("ready");
-    $(".loadDiv").css("display", "none");
-    $("#section-landing").css("display", "block");
-    $(".footer").css("display", "block");
-}
+// window.onload = function () {
+//     loadPage();
+// };
 
-function loading() {
-    $(".loadDiv").css("display", "block");
-}
+// function loadPage() {
+//     console.log("ready");
+//     $(".loadDiv").css("display", "none");
+//     $("#section-landing").css("display", "block");
+//     $(".footer").css("display", "block");
+// }
+
+// function loading() {
+//     $(".loadDiv").css("display", "block");
+// }

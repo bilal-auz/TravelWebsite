@@ -48,11 +48,13 @@ class CountryController extends MainController
     public function getByCriteria(Request $request)
     {
         // dd($request->language);
-        $countries = Country::searchByCriteria(new CountryCriteriaSearch(
+        $searchCountry = new CountryCriteriaSearch(
             $request->language,
             $request->currency,
             $request->continent
-        ));
+        );
+
+        $countries = Country::searchByCriteria($searchCountry);
 
         return view('country.byCriteria.results')->with('countries', $countries);
     }

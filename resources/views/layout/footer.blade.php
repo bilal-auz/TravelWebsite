@@ -21,13 +21,13 @@
             <div class="sectionBody">
                 <ul>
                     <h3>Search By Name</h3>
-                    <li><a href="searchByName/Country">Country</a></li>
-                    <li><a href="searchByName/City">City</a></li>
+                    <li><a href="/searchByName/Country">Country</a></li>
+                    <li><a href="/searchByName/City">City</a></li>
                 </ul>
                 <ul>
                     <h3>Search By Criteria</h3>
-                    <li><a href="searchByCriteria/Country">Country</a></li>
-                    <li><a href="searchByCriteria/City">City</a></li>
+                    <li><a href="/searchByCriteria/Country">Country</a></li>
+                    <li><a href="/searchByCriteria/City">City</a></li>
                 </ul>
             </div>
         </div>

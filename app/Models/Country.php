@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
 use App\Models\Reviews\Country as ReviewsCountry;
 use App\Searches\CountryNameSearch;
+use Illuminate\Support\Facades\DB;
 
 class Country extends Model
 {
@@ -68,12 +69,49 @@ class Country extends Model
     {
         $data = $searchObj->getAttributes();
 
-        $countries = Country::SELECT('country_name')
-            ->where('lang_name', $data['language'])
-            ->where('currency_code', $data['currency'])
-            ->where('continent', $data['continent'])
-            ->orderBy('country_name', 'ASC')
-            ->get();
+        // dd($data);
+
+        /** NEXT IF-ELSE Explanation
+         * 
+         * if the input is null(empty)
+         * the value gets the same column name to return everything = WHERE 1+1
+         * 
+         * NOTE: the value cant be single quoted it should be the exact same name of the column
+         * 
+         * else if the input is filled the single quotes added to the value(its query string rule)
+         * 
+         */
+        if (is_null($data['language'])) {
+            $lang = 'lang_name';
+        } else {
+            $lang = "'" . $data['language'] . "'";
+        }
+
+        if (is_null($data['currency'])) {
+            $currency = 'currency_code';
+        } else {
+            $currency = "'" .  $data['currency'] . "'";
+        }
+
+        if (is_null($data['continent'])) {
+            $continent = 'continent';
+        } else {
+            $continent = "'" . $data['continent'] . "'";
+        }
+
+
+        // dd($data);
+        $query = "SELECT country_name FROM country WHERE lang_name =" . $lang . " AND currency_code =" . $currency . " AND continent =" . $continent . " ORDER BY country_name ASC";
+
+        $countries = DB::SELECT($query);
+        // $countries = Country::SELECT('country_name')
+        //     ->WHERE('lang_name', $data['language'])
+        //     ->WHERE('currency_code', $data['currency'])
+        //     ->WHERE('continent', $data['continent'])
+        //     ->orderBy('country_name', 'ASC')
+        //     ->get();
+
+        // dd($countries);
 
         return $countries;
     }
