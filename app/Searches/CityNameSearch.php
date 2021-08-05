@@ -45,37 +45,23 @@ class CityNameSearch implements ISearch
     {
         error_log('Searching...');
 
-        // return "From Search by name, calling APIS.." . "cityName=$this->cityName, " . "CityAirportCode = $this->cityAirportCode";
-
-        // $hotels = $this->hotelsApi->getHotels($this->cityAirportCode);
-
         error_log('Hotel API');
-        // $hotels = $this->hotelsApi->getHotels($this->latitude, $this->longitude);
         $hotels = $this->getHotels($this->latitude, $this->longitude);
 
         error_log('Flight API');
         $flights = $this->getFlights($this->cityAirportCodes);
 
-
-        // $restaurants = $this->restaurantsApi->getRestaurants($this->cityName);
         error_log('Restaurants API');
-        // $restaurants = $this->restaurantsApi->getRestaurants($this->latitude, $this->longitude);
         $restaurants = $this->getRestaurants($this->latitude, $this->longitude);
 
 
         error_log('Place API');
-        // $places = $this->placeToDiscover->getRandPlace($this->cityName);
         $places = $this->getPlaces($this->cityName);
 
         error_log('weather API');
-        // $weather = $this->weatherApi->getWeather(
-        //     $this->latitude,
-        //     $this->longitude
-        // );
         $weather = $this->getWeather($this->latitude, $this->longitude);
 
         error_log('images API');
-        // $image = $this->imagesApi->getImage($this->cityName);
         $image = $this->getImages($this->cityName);
 
         $city = [

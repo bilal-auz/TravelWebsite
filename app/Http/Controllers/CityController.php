@@ -28,30 +28,13 @@ class CityController extends MainController
 
     public function getByName(Request $request)
     {
-        // $city = City::searchByName($request->input('city_name'));
         $city = City::searchByName($request->cityName); //temp
-
-        // $file = fopen('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city', 'w');
-        // // fwrite($file, json_encode($city));
-        // fwrite($file, $city);
-        // fclose($file);
-
-        // file_put_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city', json_encode($city));
-
-        // $city = file_get_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city');
-
-        // $city = json_decode($city);
-
-        // dd($city);
 
         return view('city.byName.results')->with('city', $city);
     }
 
     public function getByCriteria(Request $request)
     {
-        // $city_airport_code = City::getCityAirportCode($request->input('city_name'));
-
-        // $city = City::searchByCriteria($request->cityName);
         $reviews = CityReviews::getCityReviews($request->cityName);
 
         $airportCodes = City::getCityAirportCodes($request->cityName);
@@ -76,9 +59,6 @@ class CityController extends MainController
         $city = City::searchByCriteria($citySearch);
 
         $city['reviews'] = $reviews;
-        // dd($city);
-
-        // dd($city);
 
         return view('city.byCriteria.results')->with('city', $city);
     }

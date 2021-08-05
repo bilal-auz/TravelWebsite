@@ -20,7 +20,7 @@ class Country extends Model
     static public function getCountryInfo($countryName)
     {
         $country = Country::where('country_name', $countryName)->get()->first();
-        // dd($country);
+
         return $country;
     }
 
@@ -30,7 +30,6 @@ class Country extends Model
 
         $reviews = ReviewsCountry::getCountryReviews($countryInfo->alpha_2_code);
 
-        // $cities = City::getCitiesInCountry("united states");
         $cities = $countryInfo->cities();
 
         $searchObj = new CountryNameSearch(
@@ -40,7 +39,6 @@ class Country extends Model
         );
 
         $res = $searchObj->search();
-        // $res = null;
 
         $country = [
             "Flag" => $res["flagImage"],
@@ -59,17 +57,12 @@ class Country extends Model
             "reviews" => $reviews
         ];
 
-
-
-
         return $country;
     }
 
     static public function searchByCriteria(ISearch $searchObj)
     {
         $data = $searchObj->getAttributes();
-
-        // dd($data);
 
         /** NEXT IF-ELSE Explanation
          * 
@@ -104,14 +97,13 @@ class Country extends Model
         $query = "SELECT country_name FROM country WHERE lang_name =" . $lang . " AND currency_code =" . $currency . " AND continent =" . $continent . " ORDER BY country_name ASC";
 
         $countries = DB::SELECT($query);
+
         // $countries = Country::SELECT('country_name')
         //     ->WHERE('lang_name', $data['language'])
         //     ->WHERE('currency_code', $data['currency'])
         //     ->WHERE('continent', $data['continent'])
         //     ->orderBy('country_name', 'ASC')
         //     ->get();
-
-        // dd($countries);
 
         return $countries;
     }

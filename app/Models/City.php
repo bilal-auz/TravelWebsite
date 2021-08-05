@@ -29,7 +29,6 @@ class City extends Model
             ->map
             ->only(['city_name']);
 
-        // dd($cities);
 
         return $cities;
     }
@@ -75,8 +74,6 @@ class City extends Model
         $city = $searchObj->search();
 
         $city['reviews'] = $reviews;
-
-        // dd($city['reviews'][0]["created_at"]->toDateTime()->format("H:i"), $city['reviews'][0]["created_at"]->toDateTime()->format("d/m/Y"));
 
         return $city;
     }

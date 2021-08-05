@@ -151,51 +151,6 @@ Route::get('/image', function () {
     return view('tst')->with('link', $link);
 });
 
-/*
-
-#SEARCH BY NAME(Country and City)
-Route::get('/searchByName/Country/{countryName}', function ($countryName) {
-    // $country = Country::where('country_name', $countryName)->get();
-    // dd($country[0]);
-
-    $country = Country::getCountryInfo($countryName);
-    dd($country);
-    $res = Country::searchByName($country->country_name, new CountryNameSearch($country->country_name, $country->alpha_2_code, $country->currency_code));
-    return view('countryTest')->with('res', $res);
-});
-
-Route::get('/searchByName/City/{cityName}', function ($cityName) {
-    $cityAirportCode = City::getCityAirportCode($cityName);
-
-    $city = City::searchByName($cityName);
-    dd($city);
-});
-
-
-#SEARCH BY Criteria(Country and city)
-route::get('/searchByCriteria/Country', function (Request $request) {
-    $res =  Country::searchByCriteria(new CountryCriteriaSearch($request->language, $request->currency, $request->continent));
-    dd($res);
-});
-route::get('/searchByCriteria/Country', function (Request $request) {
-    $res =  City::searchByCriteria(new CityCriteriaSearch(
-        $request->cityName,
-        $request->CityCriteriaSearch,
-        $request->hotelMinPrice,
-        $request->hotelMinPrice,
-        $request->hotelMaxPrice,
-        $request->restaurantMinPrice,
-        $request->restaurantMixPrice,
-        $request->placeKeyWord,
-        $request->flightMinPrice,
-        $request->flightMaxPrice,
-        $request->hotelMinPrice
-    ));
-    dd($res);
-});
-
-*/
-
 Route::get('/home', function () {
     return view('index');
 });
@@ -250,14 +205,6 @@ Route::prefix('/searchByCriteria')->group(function () {
     Route::get('/City/search', [CityController::class, 'getByCriteria'])->name('city.criteriaSearch');
 });
 
-// Route::get('/tstHotels', function (Request $req) {
-//     error_log("inside");
-//     $tst = new CityCriteriaSearch();
-//     $tst->setDestinationAirportCode("CMN");
-//     $tst->setHotelMinPrice(11);
-//     $tst->setHotelMaxPrice(55);
-//     dd($tst->search());
-// });
 
 Route::get('/resultTst', function () {
 

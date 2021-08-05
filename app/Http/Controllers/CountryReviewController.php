@@ -25,7 +25,6 @@ class CountryReviewController extends Controller
      */
     public function store(Request $request)
     {
-        // return;
         //save a review
         Country::addCountryReviews($request->input('country_code'), $request->input('user_name'), $request->input('review_body'));
         return redirect()->back();
@@ -39,7 +38,6 @@ class CountryReviewController extends Controller
     //  */
     public function show(Request $request)
     {
-        // dd($request->);
         //get reviews pass the countryCode as url param
         return Country::getCountryReviews($request->country_code);
     }
