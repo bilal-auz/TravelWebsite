@@ -2,8 +2,6 @@
 
 namespace App\Models\Reviews;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 class Country_Review extends Model

@@ -2,9 +2,9 @@
 
 namespace App\Models\Reviews;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
+
+// City Reivews Model
 use App\Models\Reviews\City_Review;
 
 class City extends Model

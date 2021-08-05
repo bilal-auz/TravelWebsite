@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use App\Lib\ISearch;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+// SEARCHES
+use App\Lib\ISearch;
+use App\Searches\CountryNameSearch;
+
+// Models
 use App\Models\City;
 use App\Models\Reviews\Country as ReviewsCountry;
-use App\Searches\CountryNameSearch;
-use Illuminate\Support\Facades\DB;
 
 class Country extends Model
 {

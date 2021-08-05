@@ -7,7 +7,6 @@ use App\Models\City;
 use Illuminate\Http\Request;
 
 //Searches
-use App\Searches\CityNameSearch;
 use App\Searches\CityCriteriaSearch;
 
 //support models

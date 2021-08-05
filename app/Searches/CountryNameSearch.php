@@ -2,9 +2,11 @@
 
 namespace App\Searches;
 
+use App\Lib\ISearch;
+
+// APIs
 use App\APIs\CurrencyApi;
 use App\APIs\NewsApi;
-use App\Lib\ISearch;
 
 class CountryNameSearch implements ISearch
 {

@@ -8,9 +8,7 @@ use App\Models\Country;
 use Illuminate\Http\Request;
 
 //Searches
-use App\Searches\CountryNameSearch;
 use App\Searches\CountryCriteriaSearch;
-use Illuminate\Support\Facades\Storage;
 
 class CountryController extends MainController
 {

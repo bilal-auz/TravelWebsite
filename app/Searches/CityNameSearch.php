@@ -2,16 +2,16 @@
 
 namespace App\Searches;
 
+use Exception;
+
+// APIs
 use App\APIs\HotelsApi;
 use App\APIs\FlightApi;
-use App\APIs\RestaurantsApi;
 use App\APIs\PlaceToDiscover;
 use App\APIs\WeatherApi;
 use App\APIs\ImagesApi;
 use App\APIs\RestaurantsHereApi;
 use App\Lib\ISearch;
-use Exception;
-use Illuminate\Support\Facades\Http;
 
 class CityNameSearch implements ISearch
 {

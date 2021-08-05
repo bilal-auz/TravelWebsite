@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use App\APIs\MapQuestApi;
-use App\APIs\WeatherApi;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+//APIs
+use App\APIs\MapQuestApi;
+
+// SEARCHES
 use App\Lib\ISearch;
 use App\Searches\CityNameSearch;
+
+// Reviews Model
 use App\Models\Reviews\City as CityReviews;
-use Carbon\Carbon;
 
 class City extends Model
 {
