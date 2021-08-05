@@ -18,7 +18,7 @@ class City extends Model
 {
     // use HasFactory;
     protected $connetion = 'mysql';
-    protected $table = 'cityAirport';
+    protected $table = 'cityairport';
     protected $primarykey = 'id';
     private static $limit = 50;
 
