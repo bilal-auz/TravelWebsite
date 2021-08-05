@@ -74,7 +74,7 @@ a {
 }
 
 .homePage {
-    background-image: url("/images/wallpaper(f).jpg");
+    background-image: url("/images/nature.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -165,7 +165,7 @@ a {
 .searchSection {
     position: relative;
     /* background-color: khaki; */
-    background-image: url("/images/2ndSectionWallpaper2(tst2f).jpg");
+    background-image: url("/images/pyramids.jpg");
 
     background-repeat: no-repeat;
     background-size: cover;

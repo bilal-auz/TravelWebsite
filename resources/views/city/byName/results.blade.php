@@ -24,7 +24,7 @@
             <div class="cityResult">
                 <div class="cols col1">
                     <div class="col1_1">
-                        <div class="blured" style="background-image: url({{ asset('/images/pattern1.svg') }});">
+                        <div class="blured" style="background-image: url({{ asset('/images/beds.svg') }});">
                             <div class="slider hotels">
                                 <h3>Hotels</h3>
                                 @if (!array_key_exists("errors", $city['hotels']))
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="col1_2">
-                        <div class="blured" style="background-image: url({{ asset('/images/foodPP.svg') }});">
+                        <div class="blured" style="background-image: url({{ asset('/images/burgers.svg') }});">
                             <div class="slider restaurants">
                                 <h3>Restaurants</h3>
                                 @foreach ($city['restaurants']->results->items as $restaurant)
