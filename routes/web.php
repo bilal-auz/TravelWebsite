@@ -1,39 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Carbon\Carbon;
 
-
-//models
-use App\Models\tstDB;
-use App\Models\tstDbSql;
-use App\Models\Country;
-use App\Models\City;
-use App\Models\Reviews\City as CityReviews;
-use App\Models\Reviews\Country as CountryReviews;
-
-//searches
-use App\Searches\CityCriteriaSearch;
-use App\Searches\CityNameSearch;
-use App\Searches\CountryNameSearch;
-use App\Searches\CountryCriteriaSearch;
-
-//testing
-use App\APIs\FlightApi;
-use App\APIs\CurrencyApi;
-use App\APIs\HotelsApi;
-use App\APIs\ImagesApi;
-use App\APIs\MapQuestApi;
-use App\APIs\PlaceToDiscover;
-use App\APIs\RestaurantsApi;
-use App\APIs\RestaurantsHereApi;
-use App\APIs\WeatherApi;
-use App\Http\Controllers\CityController;
 //controllers
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryReviewController;
 use App\Http\Controllers\CityReviewController;
-use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,106 +23,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/nosql', function (Request $req) {
-    error_log("noSql");
-    tstDB::create(['id' => 1, 'title' => 'title1']);
-    dd($req);
-});
-
-Route::get('/sql', function (Request $req) {
-    tstDbSql::create([]);
-});
-
-Route::get('/date', function (Request $req) {
-    return (Carbon::now()->format('Y-m-d'));
-});
-
-Route::get('/hotels', function (Request $req) {
-    $hotels = HotelsApi::getInstance();
-
-    $codes = City::getCityAirportCodes('khartoum');
-
-    $coord = City::getCityCoords('khartoum');
-    dd($coord);
-    $res = $hotels->getHotels($codes[0], $coord->lat, $coord->lng);
-    dd($res);
-});
-Route::get('/flights', function (Request $req) {
-    $flight = FlightApi::getInstance();
-    // $weather = WeatherApi::getInstance();
-
-    // $city = "new York";
-
-    // $codes = City::getCityAirportCodes($city);
-
-    // $coord = $weather->getCityCoord($city);
-
-    $res = $flight->getFlightsWithPrices("LGA", '10000', '99999');
-
-    dd($res);
-});
-
-Route::get('/currency', function (Request $req) {
-
-
-    $currency = CurrencyApi::getInstance();
-
-    $currency->convert("AFN");
-});
-
-Route::get('/restaurants', function (Request $req) {
-    $hotels = RestaurantsHereApi::getInstance();
-    $weather = WeatherApi::getInstance();
-    $coord = $weather->getCityCoord('doha');
-    dd($coord);
-    $res = $hotels->getRestaurants($coord);
-    dd($res);
-});
-
-Route::get('/weather', function (Request $req) {
-    $weather = WeatherApi::getInstance();
-    $res = $weather->getWeather("doha");
-    // $res = explode(".", $res->main->temp, 99)[0];
-    dd($res);
-});
-
-Route::get('/res', function (Request $req) {
-    $resto = RestaurantsHereApi::getInstance();
-    $weather = WeatherApi::getInstance();
-
-    $coord = $weather->getCityCoord('rabat');
-    dd($coord);
-    $r = $resto->getRestaurants($coord);
-    echo 'in';
-    dd($r);
-});
-
-Route::get('/place', function (Request $req) {
-    $place = PlaceToDiscover::getInstance();
-    $res = $place->getPlacesByLabel("paris", "Beach");
-    dd($res);
-});
-
-
-Route::get('/testDBmongodb/{country_code}', function ($country_code) {
-    // $res = Country::create(['country_code' => $country_code, 'reviews' => array()]);
-    // dd($res);
-    // $newCountry = Country::where('country_code', "MA")->get();
-
-    $newReview = CityReviews::addCityReview($country_code, "Bilal", "jouj");
-    // dd($newReview);
-    // echo $newReview->country_review;
-    return view('tst2')->with('newReview', $newReview);
-});
-
-Route::get('/image', function () {
-    $imageApi = ImagesApi::getInstance();
-
-    $res = $imageApi->getImage("khartoum");
-
-    $link = $res->results[random_int(0, 10)]->urls->regular;
-    return view('tst')->with('link', $link);
-});
 
 Route::get('/home', function () {
     return view('index');
@@ -203,24 +76,4 @@ Route::prefix('/searchByCriteria')->group(function () {
         return view('city.byCriteria.searchForm');
     });
     Route::get('/City/search', [CityController::class, 'getByCriteria'])->name('city.criteriaSearch');
-});
-
-
-Route::get('/resultTst', function () {
-
-    $city = file_get_contents('C:\Users\belal\Desktop\Internship_Project\5-Development\Travel-Website-v8\public\ApiResponses\city');
-
-    $city = json_decode($city);
-
-    return view('resultTst')->with('city', $city);
-});
-
-Route::get('/cities', function () {
-    City::getCitiesInCountry('United states');
-});
-
-
-Route::get('/coords', function () {
-    $coords = MapQuestApi::getInstance();
-    $coords->getPlaceCoords("rabat");
 });
