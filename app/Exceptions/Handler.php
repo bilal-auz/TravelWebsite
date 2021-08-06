@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
         // });
 
         $this->renderable(function (\Illuminate\Database\QueryException $e, $request) {
-            return abort(500);
+            return abort(500, $e->getMessage());
         });
     }
 }
