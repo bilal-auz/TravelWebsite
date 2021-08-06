@@ -17,26 +17,34 @@ class City extends Model
 
     public static function getCityReviews(String $city_name)
     {
-        $cityReviews = City::where('city_name', $city_name)->first();
-        if (is_null($cityReviews)) {
-            return null;
+        try {
+            $cityReviews = City::where('city_name', $city_name)->first();
+            if (is_null($cityReviews)) {
+                return null;
+            }
+            return $cityReviews->city_review;
+        } catch (\Exception $e) {
+            abort(500, $e->getMessage());
         }
-        return $cityReviews->city_review;
     }
 
     public static function addCityReview(String $city_name, String $user_name, String $review_body)
     {
-        $city = City::where('city_name', $city_name)->get();
+        try {
+            $city = City::where('city_name', $city_name)->get();
 
-        if (sizeof($city) <= 0) {
-            $city = City::create(['city_name' => $city_name]);
-        } else {
-            $city = $city[0];
+            if (sizeof($city) <= 0) {
+                $city = City::create(['city_name' => $city_name]);
+            } else {
+                $city = $city[0];
+            }
+
+            $city->city_review()->create(['user_name' => $user_name, 'review_body' => $review_body]);
+
+            return $city;
+        } catch (\Exception $e) {
+            abort(500, $e->getMessage());
         }
-
-        $city->city_review()->create(['user_name' => $user_name, 'review_body' => $review_body]);
-
-        return $city;
     }
 
     public function city_review()

@@ -17,28 +17,36 @@ class Country extends Model
 
     public static function getCountryReviews(String $countryCode)
     {
-        $countryReviews = Country::where('country_code', $countryCode)->first();
+        try {
+            $countryReviews = Country::where('country_code', $countryCode)->first();
 
-        if (is_null($countryReviews)) {
-            return null;
+            if (is_null($countryReviews)) {
+                return null;
+            }
+
+            return $countryReviews->country_review;
+        } catch (\Exception $e) {
+            abort(500, $e->getMessage());
         }
-
-        return $countryReviews->country_review;
     }
 
     public static function addCountryReviews(String $countryCode, String $userName, String $review_body)
     {
-        $counrty = Country::where('country_code', $countryCode)->get();
+        try {
+            $counrty = Country::where('country_code', $countryCode)->get();
 
-        if (sizeof($counrty) <= 0) {
-            $counrty = Country::create(['country_code' => $countryCode]);
-        } else {
-            $counrty = $counrty[0];
+            if (sizeof($counrty) <= 0) {
+                $counrty = Country::create(['country_code' => $countryCode]);
+            } else {
+                $counrty = $counrty[0];
+            }
+
+            $counrty->country_review()->create(['user_name' => $userName, 'review_body' => $review_body]);
+
+            return $counrty;
+        } catch (\Exception $e) {
+            abort(500, $e->getMessage());
         }
-
-        $counrty->country_review()->create(['user_name' => $userName, 'review_body' => $review_body]);
-
-        return $counrty;
     }
 
     public function country_review()

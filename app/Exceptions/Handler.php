@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Mockery\Exception\InvalidOrderException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,8 +35,12 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
+
+        $this->renderable(function (\Illuminate\Database\QueryException $e, $request) {
+            return abort(500);
         });
     }
 }
