@@ -27,7 +27,7 @@ class CityController extends MainController
 
     public function getByName(Request $request)
     {
-        $city = City::searchByName($request->cityName); //temp
+        $city = City::searchByName($request->cityName);
 
         return view('city.byName.results')->with('city', $city);
     }
