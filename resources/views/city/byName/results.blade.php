@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('body')
-{{-- {{ dd($city) }} --}}
+{{ dd($city) }}
 {{-- {{ dd(count($city['image']->results)/2) }} --}}
 <script src="{{ asset('/js/headerScroll.js') }}"></script>
     <div class="main">
@@ -103,7 +103,7 @@
                                             <img src="{{ asset('images/plane.svg') }}" alt="">
                                         </div>
                                     </div>
-                                    @if (array_key_exists("data", $city['flights']))
+                                    @if (isset($city['flights']->data))
                                         @if (count($city['flights']->data) > 0)
                                             <div class="data">
                                                 <div class="dataInfo">
