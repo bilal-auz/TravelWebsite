@@ -20,7 +20,7 @@ class PlaceToDiscover implements IApi
         if (is_null(PlaceToDiscover::$instance)) {
             PlaceToDiscover::$instance = new PlaceToDiscover();
         }
-
+        //
         return PlaceToDiscover::$instance;
     }
 
