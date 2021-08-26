@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('body')
-{{ dd($city) }}
+{{-- {{ dd($city) }} --}}
 {{-- {{ dd(count($city['image']->results)/2) }} --}}
 <script src="{{ asset('/js/headerScroll.js') }}"></script>
     <div class="main">
