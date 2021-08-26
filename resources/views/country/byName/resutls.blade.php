@@ -55,7 +55,7 @@
             <div class="blured countryCards">
                 <h3>News</h3>
                 <div class="news">
-                    @if (!array_key_exists("error", $country['news']))
+                    @if (!isset($country['news']->error))
                         @if ($country['news']->pagination->count > 0)
                             @foreach ($country['news']->data as $new )
                                 <div class="news-wrap">
