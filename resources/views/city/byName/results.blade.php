@@ -27,7 +27,7 @@
                         <div class="blured" style="background-image: url({{ asset('/images/beds.svg') }});">
                             <div class="slider hotels">
                                 <h3>Hotels</h3>
-                                @if (!array_key_exists("errors", $city['hotels']))
+                                @if (!isset($city['hotels']->errors))
                                     @if (count($city['hotels']->data) > 0)
                                         @foreach ($city['hotels']->data as $hotel)
                                         <div class="itemWrap">
