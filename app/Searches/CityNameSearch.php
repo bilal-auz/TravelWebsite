@@ -92,7 +92,7 @@ class CityNameSearch implements ISearch
                 foreach ($cityAirportCodes as $code) {
                     $flights = $this->flightsApi->getFlights($code);
 
-                    if (array_key_exists('errors', $flights)) {
+                    if (isset($flights->errors)) {
                         continue;
                     }
 
