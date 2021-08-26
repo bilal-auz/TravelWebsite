@@ -96,7 +96,7 @@ class CityNameSearch implements ISearch
                         continue;
                     }
 
-                    if (array_key_exists('meta', $flights)) {
+                    if (isset($flights->meta)) {
                         if ($flights->meta->count < 1) {
                             continue;
                         }
