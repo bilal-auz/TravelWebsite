@@ -92,7 +92,8 @@ return [
         ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => 'mongodb+srv://BilalTravelWebsite:TravelWebsite2021@cluster0.vtonh.mongodb.net/travel_website_reviews?retryWrites=true&w=majority',
+            'dsn' => ${{secret.mongodb_dsn}},
+            //'dsn' => 'mongodb+srv://BilalTravelWebsite:TravelWebsite2021@cluster0.vtonh.mongodb.net/travel_website_reviews?retryWrites=true&w=majority',
             'database' => 'travel_website_reviews',
         ]
         // 'mongodb' => [
